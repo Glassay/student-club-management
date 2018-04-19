@@ -21,7 +21,8 @@ module.exports = app => {
         table.increments();
         table.string('username').notNullable().defaultTo('');
         table.string('password').notNullable().defaultTo('');
-        table.string('jurisdiction').notNullable().defaultTo('');
+        table.boolean('jurisdiction').notNullable().defaultTo(0);
+        table.string('club').notNullable().defaultTo('');
         table.timestamp('create_at').defaultTo(knex.fn.now());
         table.charset('utf8');
       });
