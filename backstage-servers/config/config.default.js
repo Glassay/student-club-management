@@ -9,6 +9,12 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
 
+  exports.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+
   exports.cors = {
     origin: '*',
     allowMethod: 'GET, POST',
