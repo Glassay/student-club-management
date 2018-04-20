@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { connect } from 'dva';
 import { Layout, Form, Icon, Input, Button, Checkbox } from 'antd';
 
 import styles from './LoginLayout.less';
@@ -18,6 +19,10 @@ class LoginLayout extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        this.props.dispatch({
+          type: 'login/adminLogin',
+          payload: values,
+        })
       }
     });
   }
@@ -61,4 +66,6 @@ class LoginLayout extends React.Component {
 }
 LoginLayout = Form.create({})(LoginLayout);
 
-export default LoginLayout;
+export default connect(({ login }) => ({
+  ...login,
+}))(LoginLayout);

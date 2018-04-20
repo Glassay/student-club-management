@@ -8,10 +8,12 @@ module.exports = app => {
   class Users extends app.Service {
     * login(param) {
       let res;
+      console.log('param>>>>>', param);
       try {
         res = yield app.mysql.select('User', {
-          where: { username: param.username },
+          where: { userName: param.userName },
         });
+        console.log('res>>>>>>', res);
         if (param.password === res[0].password) {
           return 'success';
         }

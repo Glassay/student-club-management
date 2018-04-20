@@ -19,7 +19,7 @@ module.exports = app => {
     if (hasUser.length === 0) {
       const studentClub = knex.schema.createTableIfNotExists('User', function(table) {
         table.increments();
-        table.string('username').notNullable().defaultTo('');
+        table.string('userName').notNullable().defaultTo('');
         table.string('password').notNullable().defaultTo('');
         table.boolean('jurisdiction').notNullable().defaultTo(0);
         table.string('club').notNullable().defaultTo('');
