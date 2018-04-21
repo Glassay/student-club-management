@@ -7,7 +7,7 @@ import request from '../utils/request';
 export async function getMembers(params) {
   return request({
     url: '/members',
-    method: 'get',
+    method: 'post',
     data: 'params',
   })
 }

@@ -11,28 +11,46 @@ import { List } from 'antd';
 class ClubMember extends React.Component {
   componentDidMount() {
     this.props.dispatch({
-      type: 'members/getMembers'
+      type: 'members/getMembers',
     })
   }
-  state={
-    loading: true,
-    loadMore: false,
+  handleCurrentChange = (page, pageSize) => {
+    this.props.dispatch({
+      type: 'list/fetch',
+      payload: {
+        page,
+        pageSize
+      },
+    })
   }
   render() {
-    const { data, loading } = this.props;
-    const { loadMore } = this.state.loading;
-    console.log('data++++++++', data);
+    const { data, loading, current } = this.props;
+    const paginationProps = {
+      pageSize: 5,
+      count: 5,
+      total: 100,
+      current: current,
+      onChange: (page) => {
+        this.props.dispatch({
+            type: 'members/changeCurrent',
+            payload: page,
+        });
+      },
+    }
+    console.log('current_+_+_+_+', current);
+    console.log('data>>>>>>', data);
     console.log('loading++++++', loading);
     return (
       <List
         loading={loading}
-        dataSource={data}
+        dataSource={data.slice((current - 1) * 7, current * 7)}
         itemLayout="horizontal"
-        loadMore={loadMore}
+        size="small"
+        // loadMore={loadMore}
+        pagination={paginationProps}
         renderItem={item => (
           <List.Item actions={[<a>修改</a>, <a>删除</a>]}>
             <List.Item.Meta
-              // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
               title={<a href="https://ant.design">{item.name}</a>}
               description={item.level}
             />
@@ -51,4 +69,5 @@ class ClubMember extends React.Component {
 export default connect(state => ({
   loading: state.loading.models.members,
   data: state.members.data,
+  current: state.members.current,
 }))(ClubMember);
