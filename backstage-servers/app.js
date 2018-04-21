@@ -48,12 +48,13 @@ module.exports = app => {
     const hasMember = yield app.mysql.query(knex.schema.hasTable('Member').toString());
     if (hasMember.length === 0) {
       const studentClub = knex.schema.createTableIfNotExists('Member', function(table) {
-        table.integer('studentNumber').notNullable().defaultTo(0);
+        table.increments();
+        table.bigInteger('studentNumber').notNullable().defaultTo(0);
         table.string('name').notNullable().defaultTo('');
         table.string('sex').notNullable().defaultTo('');
         table.string('class').notNullable().defaultTo('');
         table.string('club').notNullable().defaultTo('');
-        table.integer('level').notNullable().defaultTo(0);
+        table.string('level').notNullable().defaultTo(0);
       });
       yield app.mysql.query(studentClub.toString());
     }
