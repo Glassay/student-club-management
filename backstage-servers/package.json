@@ -8,8 +8,7 @@
     "egg-cors": "^2.0.0",
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.5.0",
-    "knex": "^0.14.6",
-    "lodash": "^4.17.5"
+    "knex": "^0.14.6"
   },
   "devDependencies": {
     "autod": "^3.0.1",

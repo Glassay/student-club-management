@@ -4,8 +4,6 @@
 
 'use strict';
 
-const _ = require('lodash');
-
 module.exports = app => {
   class Members extends app.Service {
     * getInfo() {

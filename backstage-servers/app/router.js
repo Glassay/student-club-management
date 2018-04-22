@@ -9,4 +9,6 @@ module.exports = app => {
   router.post('/login', 'users.login');
   router.get('/all', 'users.info');
   router.post('/members', 'members.getInfo');
+  router.post('/deleteMembers', 'members.deleteInfo');
+  router.post('/updateMembers', 'members.updateInfo');
 };
