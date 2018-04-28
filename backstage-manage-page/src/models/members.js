@@ -2,7 +2,9 @@
  * 2018-04-20 Jifeng Cheng
  */
 
-import { getMembers } from '../services/members';
+import { message } from 'antd';
+
+import { getMembers, deleteMembers } from '../services/members';
 
 export default {
   namespace: 'members',
@@ -22,6 +24,22 @@ export default {
       })
     },
 
+    *deleteMember({ payload }, { call, put, select }) {
+      const params = { id: payload };
+      const res = yield call(deleteMembers, params)
+      console.log('deleteRes>>>>', res);
+      if(res === 'success') {
+        message.success('删除成功!');
+        const refreshData = yield call(getMembers);
+        yield put({
+          type: 'updateMembers',
+          payload: refreshData
+        })
+      } else {
+        message.error('删除失败!');
+      }
+    },
+
     *changeCurrent({ payload }, { call, put, select }) {
       yield put({
         type: 'getCurrent',
@@ -35,6 +53,13 @@ export default {
       return {
         ...state,
         data: payload,
+      }
+    },
+
+    updateMembers(state, { payload }) {
+      return {
+        ...state,
+        data: payload
       }
     },
 

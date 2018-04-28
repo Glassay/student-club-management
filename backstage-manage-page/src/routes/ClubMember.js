@@ -14,13 +14,12 @@ class ClubMember extends React.Component {
       type: 'members/getMembers',
     })
   }
-  handleCurrentChange = (page, pageSize) => {
+
+  handleDelete = (id) => {
+    console.log('id>>>>>>>', id);
     this.props.dispatch({
-      type: 'list/fetch',
-      payload: {
-        page,
-        pageSize
-      },
+      type: 'members/deleteMember',
+      payload: id
     })
   }
   render() {
@@ -37,19 +36,15 @@ class ClubMember extends React.Component {
         });
       },
     }
-    console.log('current_+_+_+_+', current);
-    console.log('data>>>>>>', data);
-    console.log('loading++++++', loading);
     return (
       <List
         loading={loading}
         dataSource={data.slice((current - 1) * 7, current * 7)}
         itemLayout="horizontal"
         size="small"
-        // loadMore={loadMore}
         pagination={paginationProps}
         renderItem={item => (
-          <List.Item actions={[<a>修改</a>, <a>删除</a>]}>
+          <List.Item actions={[<a>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
             <List.Item.Meta
               title={<a href="https://ant.design">{item.name}</a>}
               description={item.level}

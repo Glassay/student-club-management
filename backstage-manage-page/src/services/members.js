@@ -6,8 +6,16 @@ import request from '../utils/request';
 
 export async function getMembers(params) {
   return request({
-    url: '/members',
+    url: '/getMembers',
     method: 'post',
     data: 'params',
+  })
+}
+
+export async function deleteMembers(payload) {
+  return request({
+    url: '/deleteMembers',
+    method: 'post',
+    data: payload
   })
 }
