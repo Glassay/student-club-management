@@ -15,9 +15,10 @@ const knex = require('knex')({
 
 module.exports = app => {
   app.beforeStart(function* () {
+    const ctx = app.createAnonymousContext();
     const hasUser = yield app.mysql.query(knex.schema.hasTable('User').toString());
     if (hasUser.length === 0) {
-      const studentClub = knex.schema.createTableIfNotExists('User', function(table) {
+      const userSchema = knex.schema.createTableIfNotExists('User', function(table) {
         table.increments();
         table.string('userName').notNullable().defaultTo('');
         table.string('password').notNullable().defaultTo('');
@@ -26,12 +27,14 @@ module.exports = app => {
         table.timestamp('create_at').defaultTo(knex.fn.now());
         table.charset('utf8');
       });
-      yield app.mysql.query(studentClub.toString());
+
+      yield app.mysql.query(userSchema.toString());
+      yield ctx.helper.unique(app, 'User', 'username');
     }
 
     const hasClub = yield app.mysql.query(knex.schema.hasTable('Club').toString());
     if (hasClub.length === 0) {
-      const studentClub = knex.schema.createTableIfNotExists('Club', function(table) {
+      const clubSchema = knex.schema.createTableIfNotExists('Club', function(table) {
         table.increments();
         table.string('title').notNullable().defaultTo('');
         table.string('content').notNullable().defaultTo('');
@@ -42,12 +45,14 @@ module.exports = app => {
         table.timestamp('create_at').defaultTo(knex.fn.now());
         table.charset('utf8');
       });
-      yield app.mysql.query(studentClub.toString());
+
+      yield app.mysql.query(clubSchema.toString());
+      yield ctx.helper.unique(app, 'Club', 'title');
     }
 
     const hasMember = yield app.mysql.query(knex.schema.hasTable('Member').toString());
     if (hasMember.length === 0) {
-      const studentClub = knex.schema.createTableIfNotExists('Member', function(table) {
+      const memberSchema = knex.schema.createTableIfNotExists('Member', function(table) {
         table.increments();
         table.bigInteger('studentNumber').notNullable().defaultTo(0);
         table.string('name').notNullable().defaultTo('');
@@ -56,7 +61,9 @@ module.exports = app => {
         table.string('club').notNullable().defaultTo('');
         table.string('level').notNullable().defaultTo(0);
       });
-      yield app.mysql.query(studentClub.toString());
+
+      yield app.mysql.query(memberSchema.toString());
+      yield ctx.helper.unique(app, 'Member', 'studentNumber');
     }
   });
 };

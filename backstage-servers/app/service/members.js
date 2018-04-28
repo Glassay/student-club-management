@@ -17,6 +17,35 @@ module.exports = app => {
       }
       return res;
     }
+    * deleteInfo(params) {
+      console.log('params>>>>>>>', params);
+      console.log('id>>>>>>', params.id);
+      try {
+        yield app.mysql.delete('Member', { id: params.id });
+      } catch (e) {
+        this.ctx.logger.error(e);
+        return false;
+      }
+      return 'success';
+    }
+    * updateInfo(params) {
+      try {
+        yield app.mysql.update('Member', params);
+      } catch (e) {
+        this.ctx.logger.error(e);
+        return false;
+      }
+      return 'success';
+    }
+    * insertInfo(params) {
+      try {
+        yield app.mysql.insert('Member', params);
+      } catch (e) {
+        this.ctx.logger.error(e);
+        return false;
+      }
+      return 'success';
+    }
   }
   return Members;
 };

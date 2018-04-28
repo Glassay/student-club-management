@@ -16,9 +16,14 @@ module.exports = app => {
       this.ctx.body = yield this.service.members.deleteInfo(this.ctx.request.body);
     }
 
-    * updateIndo() {
+    * updateInfo() {
       console.log(this.ctx.request.body);
-      this.ctx.body = yield this.service.members.updateIndo(this.ctx.request.body);
+      this.ctx.body = yield this.service.members.updateInfo(this.ctx.request.body);
+    }
+
+    * insertInfo() {
+      console.log(this.ctx.request.body);
+      this.ctx.body = yield this.service.members.insertInfo(this.ctx.request.body);
     }
   }
   return MembersController;
