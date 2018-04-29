@@ -33,7 +33,12 @@ class BasicLayout extends React.Component {
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <div className="logo" />
+          <div className={styles.logo}>
+            <Link to="/">
+              <img src="https://gw.alipayobjects.com/zos/rmsportal/iwWyPinUoseUxIAeElSx.svg" alt="logo" />
+              <h1>社团管理系统</h1>
+            </Link>
+          </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <SubMenu
               key="sub1"
@@ -57,13 +62,31 @@ class BasicLayout extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
-            <h1 className={styles.title}>学生社团管理</h1>
+          <Header>
+            <Menu theme="dark" mode="horizontal">
+              <SubMenu
+                style={{
+                  float: 'right',
+                  right: 20,
+                  top: 8
+                }}
+                title={
+                  <span>
+                    <Icon type="user" />
+                    管理员
+                  </span>
+                }
+              >
+                <Menu.Item key="logout">
+                  退出登录
+                </Menu.Item>
+              </SubMenu>
+            </Menu>
           </Header>
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+              <Breadcrumb.Item>用户管理</Breadcrumb.Item>
+              <Breadcrumb.Item>社团管理</Breadcrumb.Item>
             </Breadcrumb>
             <div style={{ padding: 24, background: '#fff', minHeight: '80vh' }}>
               <Switch>

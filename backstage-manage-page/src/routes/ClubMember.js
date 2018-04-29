@@ -8,7 +8,13 @@ import React from 'react';
 import { connect } from 'dva';
 import { List } from 'antd';
 
+import ModifyModal from '../components/ModifyModal';
+
 class ClubMember extends React.Component {
+  state = {
+    visible: false
+  }
+
   componentDidMount() {
     this.props.dispatch({
       type: 'members/getMembers',
@@ -22,6 +28,36 @@ class ClubMember extends React.Component {
       payload: id
     })
   }
+
+  showModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false
+    })
+  }
+
+  handleModify = () => {
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      form.resetFields();
+      this.setState({
+        visible: false
+      })
+    })
+  }
+
+  saveFormRef = (formRef) => {
+    this.formRef = formRef;
+  }
+
   render() {
     const { data, loading, current } = this.props;
     const paginationProps = {
@@ -44,7 +80,7 @@ class ClubMember extends React.Component {
         size="small"
         pagination={paginationProps}
         renderItem={item => (
-          <List.Item actions={[<a>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
+          <List.Item actions={[<a onClick={this.showModal}>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
             <List.Item.Meta
               title={<a href="https://ant.design">{item.name}</a>}
               description={item.level}
@@ -52,8 +88,15 @@ class ClubMember extends React.Component {
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <div style={{ margin: 15 }}>{item.sex}</div>
               <div style={{ margin: 15 }}>{item.studentNumber}</div>
-              <div>{item.class}</div>
+              <div style={{ margin: 15 }}>{item.class}</div>
+              <div>{item.club}</div>
             </div>
+            <ModifyModal
+              wrappedComponentRef={this.saveFormRef}
+              visible={this.state.visible}
+              onCancel={this.handleCancel}
+              onCreate={this.handleCreate}
+            />
           </List.Item>
         )}
       />
