@@ -55,10 +55,6 @@ class ClubMember extends React.Component {
     })
   }
 
-  saveFormRef = (formRef) => {
-    this.formRef = formRef;
-  }
-
   render() {
     const { data, loading, current } = this.props;
     const paginationProps = {
@@ -99,7 +95,6 @@ class ClubMember extends React.Component {
               studentNumber={item.studentNumber}
               class={item.class}
               club={item.club}
-              wrappedComponentRef={this.saveFormRef}
               visible={this.state.visible}
               onCancel={this.handleCancel}
               onCreate={this.handleCreate}
