@@ -29,10 +29,11 @@ class ClubMember extends React.Component {
     })
   }
 
-  showModal = () => {
+  showModal = (i) => {
     this.setState({
       visible: true
     })
+    console.log('index>>>>>', i);
   }
 
   handleCancel = () => {
@@ -80,7 +81,7 @@ class ClubMember extends React.Component {
         size="small"
         pagination={paginationProps}
         renderItem={item => (
-          <List.Item actions={[<a onClick={this.showModal}>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
+          <List.Item actions={[<a onClick={() => this.showModal(item.id)}>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
             <List.Item.Meta
               title={<a href="https://ant.design">{item.name}</a>}
               description={item.level}
@@ -92,6 +93,12 @@ class ClubMember extends React.Component {
               <div>{item.club}</div>
             </div>
             <ModifyModal
+              name={item.name}
+              duty={item.level}
+              sex={item.sex}
+              studentNumber={item.studentNumber}
+              class={item.class}
+              club={item.club}
               wrappedComponentRef={this.saveFormRef}
               visible={this.state.visible}
               onCancel={this.handleCancel}
