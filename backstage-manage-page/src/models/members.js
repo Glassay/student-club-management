@@ -4,7 +4,7 @@
 
 import { message } from 'antd';
 
-import { getMember, getMembers, deleteMembers } from '../services/members';
+import { getMember, deleteMembers } from '../services/members';
 
 export default {
   namespace: 'members',
