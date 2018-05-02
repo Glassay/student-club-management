@@ -6,8 +6,7 @@
 
 module.exports = app => {
   class Members extends app.Service {
-    * getInfo() {
-      console.log('keys>>>>>');
+    * getInfos() {
       let res;
       try {
         res = yield app.mysql.select('Member');
@@ -17,6 +16,21 @@ module.exports = app => {
       }
       return res;
     }
+
+    * getInfo(data) {
+      let res;
+      try {
+        res = yield app.mysql.select('Member', {
+          limit: 7,
+          offset: (data.data - 1) * 7,
+        });
+      } catch (e) {
+        this.ctx.logger.error(e);
+        return false;
+      }
+      return res;
+    }
+
     * deleteInfo(params) {
       console.log('params>>>>>>>', params);
       console.log('id>>>>>>', params.id);
@@ -28,6 +42,7 @@ module.exports = app => {
       }
       return 'success';
     }
+
     * updateInfo(params) {
       try {
         yield app.mysql.update('Member', params);
@@ -37,6 +52,7 @@ module.exports = app => {
       }
       return 'success';
     }
+
     * insertInfo(params) {
       try {
         yield app.mysql.insert('Member', params);

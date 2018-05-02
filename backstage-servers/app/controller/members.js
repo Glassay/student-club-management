@@ -6,6 +6,11 @@
 
 module.exports = app => {
   class MembersController extends app.Controller {
+    * getInfos() {
+      console.log(this.ctx.request.body);
+      this.ctx.body = yield this.service.members.getInfos(this.ctx.request.body);
+    }
+
     * getInfo() {
       console.log(this.ctx.request.body);
       this.ctx.body = yield this.service.members.getInfo(this.ctx.request.body);

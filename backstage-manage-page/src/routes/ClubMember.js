@@ -12,7 +12,8 @@ import ModifyModal from '../components/ModifyModal';
 
 class ClubMember extends React.Component {
   state = {
-    visible: false
+    visible: false,
+    index: 0
   }
 
   componentDidMount() {
@@ -31,7 +32,8 @@ class ClubMember extends React.Component {
 
   showModal = (i) => {
     this.setState({
-      visible: true
+      visible: true,
+      index: i
     })
     console.log('index>>>>>', i);
   }
@@ -76,8 +78,8 @@ class ClubMember extends React.Component {
         itemLayout="horizontal"
         size="small"
         pagination={paginationProps}
-        renderItem={item => (
-          <List.Item actions={[<a onClick={() => this.showModal(item.id)}>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
+        renderItem={(item, index) => (
+          <List.Item actions={[<a onClick={() => this.showModal(index)}>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
             <List.Item.Meta
               title={<a href="https://ant.design">{item.name}</a>}
               description={item.level}
@@ -89,7 +91,7 @@ class ClubMember extends React.Component {
               <div>{item.club}</div>
             </div>
             <ModifyModal
-              name={item.name}
+              name={data[this.state.index].name}
               duty={item.level}
               sex={item.sex}
               studentNumber={item.studentNumber}

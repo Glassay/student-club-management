@@ -6,7 +6,7 @@ import request from '../utils/request';
 
 export async function getMembers(params) {
   return request({
-    url: '/getMembers',
+    url: '/getMember',
     method: 'post',
     data: 'params',
   })
