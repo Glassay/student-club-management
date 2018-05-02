@@ -13,4 +13,8 @@ module.exports = app => {
   router.post('/deleteMembers', 'members.deleteInfo');
   router.post('/updateMembers', 'members.updateInfo');
   router.post('/insertMembers', 'members.insertInfo');
+  router.post('/insertActivities', 'activities.insertInfo');
+  router.post('/deleteActivities', 'activities.deleteInfo');
+  router.post('/updateActivities', 'activities.updateInfo');
+  router.post('/getActivities', 'activities.selectInfo');
 };
