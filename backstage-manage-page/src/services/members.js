@@ -6,9 +6,16 @@ import request from '../utils/request';
 
 export async function getMembers(params) {
   return request({
+    url: '/getMembers',
+    method: 'post',
+    data: params,
+  })
+}
+export async function getMember(params) {
+  return request({
     url: '/getMember',
     method: 'post',
-    data: 'params',
+    data: params,
   })
 }
 

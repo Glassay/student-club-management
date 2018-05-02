@@ -17,8 +17,10 @@ class ClubMember extends React.Component {
   }
 
   componentDidMount() {
+    console.log('current>>>>>>', this.props.current);
     this.props.dispatch({
       type: 'members/getMembers',
+      payload: this.props.current
     })
   }
 
@@ -74,7 +76,7 @@ class ClubMember extends React.Component {
     return (
       <List
         loading={loading}
-        dataSource={data.slice((current - 1) * 7, current * 7)}
+        dataSource={data}
         itemLayout="horizontal"
         size="small"
         pagination={paginationProps}

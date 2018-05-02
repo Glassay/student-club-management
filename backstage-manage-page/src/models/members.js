@@ -4,7 +4,7 @@
 
 import { message } from 'antd';
 
-import { getMembers, deleteMembers } from '../services/members';
+import { getMember, getMembers, deleteMembers } from '../services/members';
 
 export default {
   namespace: 'members',
@@ -16,7 +16,10 @@ export default {
 
   effects: {
     *getMembers({ payload }, { call, put, select }) {
-      const res = yield call(getMembers)
+      const current = yield select(state => state.members.current)
+      const data = { 'current': current };
+      console.log('payload>>>>>>', data);
+      const res = yield call(getMember, data)
       console.log('res>>>>>', res);
       yield put({
         type: 'getMember',
@@ -30,7 +33,9 @@ export default {
       console.log('deleteRes>>>>', res);
       if(res === 'success') {
         message.success('删除成功!');
-        const refreshData = yield call(getMembers);
+        const current = yield select(state => state.members.current);
+        const data = { 'current': current };
+        const refreshData = yield call(getMember, data);
         yield put({
           type: 'updateMembers',
           payload: refreshData
@@ -44,6 +49,13 @@ export default {
       yield put({
         type: 'getCurrent',
         payload,
+      })
+      const current = yield select(state => state.members.current);
+      const data = { 'current': current };
+      const res = yield call(getMember, data);
+      yield put({
+        type: 'getMember',
+        payload: res
       })
     }
   },
