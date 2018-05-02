@@ -22,7 +22,7 @@ module.exports = app => {
       try {
         res = yield app.mysql.select('Member', {
           limit: 7,
-          offset: (data.data - 1) * 7,
+          offset: (data.current - 1) * 7,
         });
       } catch (e) {
         this.ctx.logger.error(e);
