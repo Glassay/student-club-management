@@ -45,7 +45,9 @@ module.exports = app => {
 
     * updateInfo(params) {
       try {
-        yield app.mysql.update('Member', params);
+        yield app.mysql.update('Member', params, {
+          where: { studentNumber: params.studentNumber },
+        });
       } catch (e) {
         this.ctx.logger.error(e);
         return false;
