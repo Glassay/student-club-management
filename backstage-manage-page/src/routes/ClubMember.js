@@ -7,7 +7,6 @@
 import React from 'react';
 import { connect } from 'dva';
 import { List, Form, Input, Modal, Radio } from 'antd';
-// import ModifyModal from '../components/ModifyModal';
 
 const FormItem = Form.Item;
 
@@ -21,6 +20,7 @@ const ModifyModal = Form.create()(
           visible={visible}
           title="社团成员信息修改"
           okText="提交"
+          cancelText="取消"
           onCancel={onCancel}
           onOk={onCreate}
           maskStyle={{ opacity: 0.2 }}
