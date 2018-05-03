@@ -4,7 +4,7 @@
 
 import { message } from 'antd';
 
-import { getMember, deleteMembers } from '../services/members';
+import { getMember, deleteMembers, modifyMembers } from '../services/members';
 
 export default {
   namespace: 'members',
@@ -12,6 +12,7 @@ export default {
   state: {
     data: [],
     current: 1,
+    modifyInfo: null,
   },
 
   effects: {
@@ -57,6 +58,22 @@ export default {
         type: 'getMember',
         payload: res
       })
+    },
+
+    *modifyMember({ payload }, { call, put, select }) {
+      const res = yield call(modifyMembers, payload);
+      if(res === 'success') {
+        message.success('修改成功！');
+        const current = yield select(state => state.members.current);
+        const data = { 'current': current };
+        const refreshInfos = yield call(getMember, data);
+        yield put({
+          type: 'updateMembers',
+          payload: refreshInfos
+        })
+      } else {
+        message.error('修改失败！');
+      }
     }
   },
 
@@ -80,6 +97,6 @@ export default {
         ...state,
         current: payload,
       }
-    }
+    },
   }
 }

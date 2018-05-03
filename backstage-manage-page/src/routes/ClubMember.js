@@ -6,10 +6,83 @@
 
 import React from 'react';
 import { connect } from 'dva';
-import { List } from 'antd';
+import { List, Form, Input, Modal, Radio } from 'antd';
+// import ModifyModal from '../components/ModifyModal';
 
-import ModifyModal from '../components/ModifyModal';
+const FormItem = Form.Item;
 
+const ModifyModal = Form.create()(
+  class extends React.Component {
+    render() {
+      const { visible, onCancel, onCreate, form } = this.props;
+      const { getFieldDecorator } = form;
+      return (
+        <Modal
+          visible={visible}
+          title="社团成员信息修改"
+          okText="提交"
+          onCancel={onCancel}
+          onOk={onCreate}
+          maskStyle={{ opacity: 0.2 }}
+        >
+          <Form layout="vertical">
+            <FormItem label="姓名">
+              {getFieldDecorator('name', {
+                initialValue: this.props.name,
+                rules: [{ required: true, message: '请输入姓名！'}],
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="性别">
+              {getFieldDecorator('sex', {
+                initialValue: this.props.sex
+              })(
+                <Radio.Group>
+                  <Radio value="男">男</Radio>
+                  <Radio value="女">女</Radio>
+                </Radio.Group>
+              )
+              }
+            </FormItem>
+            <FormItem label="学号">
+              {getFieldDecorator('studentNumber', {
+                initialValue: this.props.studentNumber,
+                rules: [{ required: true, message: '请输入学号！'}]
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="班级">
+              {getFieldDecorator('class', {
+                initialValue: this.props.class,
+                rules: [{ required: true, message: '请输入班级！'}]
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="社团">
+              {getFieldDecorator('club', {
+                initialValue: this.props.club,
+                rules: [{ required: true, message: '请输入社团名！'}]
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="职务">
+              {getFieldDecorator('level', {
+                initialValue: this.props.level,
+                rules: [{ required: true, message: '请输入职务！'}]
+              })(
+                <Input />
+              )}
+            </FormItem>
+          </Form>
+        </Modal>
+      )
+    }
+  }
+)
 class ClubMember extends React.Component {
   state = {
     visible: false,
@@ -47,20 +120,24 @@ class ClubMember extends React.Component {
     })
   }
 
-  handleModify = () => {
+  saveFormRef = (formRef) => {
+    this.formRef = formRef;
+  }
+
+
+  handleCreate = (e) => {
+    e.preventDefault();
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-        // this.props.dispatch({
-        //   type: 'login/adminLogin',
-        //   payload: values,
-        // })
-        this.setState({
-          modifyData: values
-        })
-        console.log('modifyData>>>>>>', this.state.modifyData);
+      if (err) {
+        return false;
       }
+      console.log('Received values of form: ', values);
+      this.props.dispatch({
+        type: 'members/modifyMember',
+        payload: values
+      })
+      console.log('modifyData>>>>>>', this.state.modifyData);
       form.resetFields();
       this.setState({
         visible: false
@@ -102,15 +179,16 @@ class ClubMember extends React.Component {
               <div>{item.club}</div>
             </div>
             <ModifyModal
+              wrappedComponentRef={this.saveFormRef}
               name={data[this.state.index].name}
-              duty={data[this.state.index].level}
+              level={data[this.state.index].level}
               sex={data[this.state.index].sex}
               studentNumber={data[this.state.index].studentNumber}
               class={data[this.state.index].class}
               club={data[this.state.index].club}
               visible={this.state.visible}
               onCancel={this.handleCancel}
-              onCreate={this.handleModify}
+              onCreate={this.handleCreate}
             />
           </List.Item>
         )}

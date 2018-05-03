@@ -26,3 +26,11 @@ export async function deleteMembers(payload) {
     data: payload
   })
 }
+
+export async function modifyMembers(payload) {
+  return request({
+    url: 'updateMembers',
+    method: 'post',
+    data: payload,
+  })
+}
