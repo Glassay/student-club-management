@@ -16,6 +16,26 @@ module.exports = app => {
       return 'success';
     }
 
+    * deleteInfo(params) {
+      try {
+        yield app.mysql.delete('Club', { id: params.id });
+      } catch (e) {
+        this.ctx.logger.error(e);
+        return false;
+      }
+      return 'success';
+    }
+
+    * updateInfo(params) {
+      try {
+        yield app.mysql.update('Club', params);
+      } catch (e) {
+        this.ctx.logger.error(e);
+        return false;
+      }
+      return 'success';
+    }
+
     * selectInfo() {
       let res;
       try {
