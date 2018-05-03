@@ -11,3 +11,11 @@ export async function getActivities(params) {
     data: params
   })
 }
+
+export async function deleteActivities(params) {
+  return request({
+    url: 'deleteActivities',
+    method: 'post',
+    data: params
+  })
+}

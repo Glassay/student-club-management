@@ -13,7 +13,8 @@ import ModifyModal from '../components/ModifyModal';
 class ClubMember extends React.Component {
   state = {
     visible: false,
-    index: 0
+    index: 0,
+    modifyData: ''
   }
 
   componentDidMount() {
@@ -49,8 +50,16 @@ class ClubMember extends React.Component {
   handleModify = () => {
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
-      if (err) {
-        return;
+      if (!err) {
+        console.log('Received values of form: ', values);
+        // this.props.dispatch({
+        //   type: 'login/adminLogin',
+        //   payload: values,
+        // })
+        this.setState({
+          modifyData: values
+        })
+        console.log('modifyData>>>>>>', this.state.modifyData);
       }
       form.resetFields();
       this.setState({
@@ -83,7 +92,7 @@ class ClubMember extends React.Component {
         renderItem={(item, index) => (
           <List.Item actions={[<a onClick={() => this.showModal(index)}>修改</a>, <a onClick={() => this.handleDelete(item.id)}>删除</a>]}>
             <List.Item.Meta
-              title={<a href="https://ant.design">{item.name}</a>}
+              title={<a href="">{item.name}</a>}
               description={item.level}
             />
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -94,14 +103,14 @@ class ClubMember extends React.Component {
             </div>
             <ModifyModal
               name={data[this.state.index].name}
-              duty={item.level}
-              sex={item.sex}
-              studentNumber={item.studentNumber}
-              class={item.class}
-              club={item.club}
+              duty={data[this.state.index].level}
+              sex={data[this.state.index].sex}
+              studentNumber={data[this.state.index].studentNumber}
+              class={data[this.state.index].class}
+              club={data[this.state.index].club}
               visible={this.state.visible}
               onCancel={this.handleCancel}
-              onCreate={this.handleCreate}
+              onCreate={this.handleModify}
             />
           </List.Item>
         )}
