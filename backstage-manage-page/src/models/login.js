@@ -11,6 +11,7 @@ export default {
   namespace: 'login',
 
   state: {
+    status: null
   },
 
   effects: {
@@ -19,10 +20,14 @@ export default {
       const result = yield call(adminLogin, payload);
       console.log('result>>>>.', result);
       if(result !== false) {
-        if(result[0].jurisdiction === 1) {
+        if(result === 'manager') {
           yield put(routerRedux.push('/management'));
         } else {
-          yield put(routerRedux.push('club'));
+          yield put({
+            type: 'saveStatus',
+            payload: result
+          })
+          yield put(routerRedux.push('/club'));
         }
       } else {
         message.error('用户名或密码错误！');
@@ -31,5 +36,11 @@ export default {
   },
 
   reducers: {
+    saveStatus(state, { payload }) {
+      return {
+        ...state,
+        status: payload,
+      }
+    }
   }
 }

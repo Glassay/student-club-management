@@ -36,7 +36,7 @@ class BasicLayout extends React.Component {
           <div className={styles.logo}>
             <Link to="/">
               <img src="https://gw.alipayobjects.com/zos/rmsportal/iwWyPinUoseUxIAeElSx.svg" alt="logo" />
-              <h1>社团管理系统</h1>
+              <h1>最高权限</h1>
             </Link>
           </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">

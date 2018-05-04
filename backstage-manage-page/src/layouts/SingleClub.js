@@ -6,6 +6,7 @@
 import React from 'react';
 import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 import { Switch, Route, Link } from 'dva/router';
+import { connect } from 'dva';
 
 import styles from './BasicLayout.less';
 import Activities from '../routes/Club/Activities';
@@ -35,7 +36,7 @@ class SingleClub extends React.Component {
           <div className={styles.logo}>
             <Link to="/">
               <img src="https://gw.alipayobjects.com/zos/rmsportal/iwWyPinUoseUxIAeElSx.svg" alt="logo" />
-              <h1>社团管理系统</h1>
+              <h1>次级权限</h1>
             </Link>
           </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
@@ -47,7 +48,7 @@ class SingleClub extends React.Component {
                 <Link to="/club/applyFor">入会申请</Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <Link to="/club/members">成员一览</Link>
+                <Link to='/club/members'>成员一览</Link>
               </Menu.Item>
               <Menu.Item key="3">暂定</Menu.Item>
             </SubMenu>
@@ -109,4 +110,6 @@ class SingleClub extends React.Component {
   }
 }
 
-export default SingleClub;
+export default connect(state => ({
+  status: state.login.status,
+}))(SingleClub);

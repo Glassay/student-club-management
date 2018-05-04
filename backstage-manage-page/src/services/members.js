@@ -4,13 +4,14 @@
 
 import request from '../utils/request';
 
-export async function getMembers(params) {
+export async function getAllMembers(params) {
   return request({
     url: '/getMembers',
     method: 'post',
     data: params,
   })
 }
+
 export async function getMember(params) {
   return request({
     url: '/getMember',

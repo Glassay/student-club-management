@@ -4,7 +4,7 @@
 
 import { message } from 'antd';
 
-import { getMember, deleteMembers, modifyMembers } from '../services/members';
+import { getMember, getAllMembers, deleteMembers, modifyMembers } from '../services/members';
 
 export default {
   namespace: 'members',
@@ -16,6 +16,15 @@ export default {
   },
 
   effects: {
+    *getAllMember({ payload }, { call, put, select }) {
+      const res = yield call(getAllMembers);
+      console.log('dasdasd', res);
+      yield put({
+        type: 'getMember',
+        payload: res,
+      })
+    },
+
     *getMembers({ payload }, { call, put, select }) {
       const current = yield select(state => state.members.current)
       const data = { 'current': current };
