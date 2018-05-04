@@ -15,7 +15,7 @@ module.exports = app => {
         });
         console.log('res>>>>>>', res);
         if (param.password === res[0].password) {
-          return res;
+          return res[0].club;
         }
         return false;
       } catch (e) {
