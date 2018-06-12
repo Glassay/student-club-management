@@ -16,7 +16,7 @@ class Members extends React.Component {
 
   render() {
     const { loading, data } = this.props;
-    console.log('cccccccccc', data);
+    console.log('dada=====', data);
     const columns = [{
       title: '姓名',
       dataIndex: 'name',
@@ -57,7 +57,7 @@ class Members extends React.Component {
         rowKey="id"
         columns={columns}
         dataSource={data}
-        loading={loading}
+        // loading={loading}
       />
     );
   }

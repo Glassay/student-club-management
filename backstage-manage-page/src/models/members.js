@@ -18,7 +18,7 @@ export default {
   effects: {
     *getAllMember({ payload }, { call, put, select }) {
       const res = yield call(getAllMembers);
-      console.log('dasdasd', res);
+      console.log('dasdasd', res.data);
       yield put({
         type: 'getMember',
         payload: res,
