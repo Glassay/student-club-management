@@ -1,6 +1,6 @@
-import axios from 'axios'
-import qs from 'qs'
-import HttpStatus from 'http-status-codes'
+import axios from 'axios';
+import qs from 'qs';
+import HttpStatus from 'http-status-codes';
 // import {
 //   baseURL,
 //   requestTimeOut
